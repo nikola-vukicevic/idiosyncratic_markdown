@@ -1,0 +1,31 @@
+# Glavni naslov
+
+Ovo je uvodni deo sastalvljen iz dva pasusa. Ovo je prvi.
+Ovo je drugi pasus
+
+## Podnaslov
+
+Ovde ćemo videti i link: <a href='#'>link</a>
+
+Takođe i blok:
+
+``
+<pre>
+	<code>
+a = 12
+b = 10
+c = a + b
+print(c)
+	</code>
+</pre>
+~~
+
+## Zaključak
+
+Videli smo:
+
+*
+	naslove i pasuse
+	inline i blok HTML elemente
+	liste
+**

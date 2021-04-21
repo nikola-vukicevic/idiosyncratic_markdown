@@ -1,0 +1,128 @@
+----------------------------------------------------------------------------------------------------
+- UVOD:
+----------------------------------------------------------------------------------------------------
+
+Ideja za ovu malu skriptu nastala je iz potrebe za vrlo jednostavnim markdown jezikom koji bi
+mogao da se koristi za  brzo pisanje HTML članaka.
+
+Ukoliko postoji mehanizam koji kreira strukturu stranice (što nije svrha ove skripte), a sadržaji
+članaka se povlače iz zasebnih datoteka, deluje da postoji način da se posao pisanja članaka
+uprosti u odnosu na standardnu markdown specifikaciju.
+
+Pretpostavićemo da se članci uglavnom sastoje iz teksta u paragrafima, naslova, listi, linkova,
+slika i blokova programskog koda i podeliti posao na sledeći način:
+
+-Naslove ćemo označiti po standardnoj markdown specifikaciji
+-Pasuse ćemo pisati u zasebnim pasusima bez ikakve sintakse
+-Liste ćemo označiti na poseban način
+-Inline elemente ćemo neposredno pisati unutar pasusa
+-Blok elemente ćemo stavljati u zasebne blokove, koji će biti preneti direktno
+-Za inline i blok elemente koje pišemo koristićemo snipete
+-Pored svega, dodaćemo i linijske komentare (koji neće na kraju završiti kao deo HTML-a)
+
+----------------------------------------------------------------------------------------------------
+ -SINTAKSA:
+----------------------------------------------------------------------------------------------------
+
+#      - h1
+##     - h2
+###    - h3
+####   - h4
+#####  - h5
+###### - h6
+``     - Otvaranje HTML bloka
+~~     - Zatvaranje HTML bloka
+!!     - Linijski komentar
+
+----------------------------------------------------------------------------------------------------
+- PRIMER (MARKDOWN):
+----------------------------------------------------------------------------------------------------
+
+# Glavni naslov
+
+Ovo je uvodni deo sastalvljen iz dva pasusa. Ovo je prvi.
+Ovo je drugi pasus
+
+## Podnaslov
+
+Ovde ćemo videti i link: <a href='#'>link</a>
+
+Takođe i blok:
+
+``
+<pre>
+	<code>
+a = 12
+b = 10
+c = a + b
+print(c)
+	</code>
+</pre>
+~~
+
+## Zaključak
+
+Videli smo:
+
+*
+	naslove i pasuse
+	inline i blok HTML elemente
+	liste
+**
+
+----------------------------------------------------------------------------------------------------
+- PRIMER (POSLE PREVOĐENJA U HTML):
+----------------------------------------------------------------------------------------------------
+
+<h1>Glavni naslov</h1>
+
+<p>
+	Ovo je uvodni deo sastalvljen iz dva pasusa. Ovo je prvi.
+</p>
+
+<p>
+	Ovo je drugi pasus
+</p>
+
+<h2>Podnaslov</h2>
+
+<p>
+	Ovde ćemo videti i link: <a href='#'>link</a>
+</p>
+
+<p>
+	Takođe i blok:
+</p>
+
+<pre>
+	<code>
+a = 12
+b = 10
+c = a + b
+print(c)
+	</code>
+</pre>
+
+<h2>Zaključak</h2>
+
+<p>
+	Videli smo:
+</p>
+
+<ul>
+	<li>naslove i pasuse</li>
+	<li>inline i blok HTML elemente</li>
+	<li>liste</li>
+</ul>
+
+----------------------------------------------------------------------------------------------------
+- PYTHON SKRIPTA, PLUGIN ZA SUBLIME TEXT I SPECIFIKACIJA JEZIKA:
+----------------------------------------------------------------------------------------------------
+
+Python skripta zahteva da se u istom folderu nađe tekstualni dokument sa nazivom "ulaz.txt"
+(rezultat će biti zapisan u datoteci "izlaz.html").
+
+Pored Python skripte, o okviru foldera je i plugin za program Sublime Text, kao i definicija jezika
+koja u ovom programu omogućava prepoznavanje tokena i bojenje sintakse.
+
+Copyright (C) 2021. Nikola Vukićević

@@ -1,0 +1,95 @@
+%YAML 1.2
+---
+# See http://www.sublimetext.com/docs/3/syntax.html
+file_extensions:
+  - imd
+scope: text.plain
+contexts:
+  main:
+    - match: '"'
+      scope: punctuation.definition.string.begin.idiosync_markdown
+      push: double_quoted_string
+
+    - match: '^!!.*\n'
+      scope: komentar.idiosync_markdown
+      push: komentar
+    
+    - match: '\b(-)?[0-9.]+\b'
+      scope: constant.numeric.idiosync_markdown
+      
+    # Naslovi
+
+    - match: '^####.*\n'
+      scope: naslov.h4.idiosync_markdown
+    
+    - match: '^###.*\n'
+      scope: naslov.h3.idiosync_markdown
+    
+    - match: '^##.*\n'
+      scope: naslov.h2.idiosync_markdown
+    
+    - match: '^#.*\n'
+      scope: naslov.h1.idiosync_markdown
+    
+    # HTML inline
+
+    - match: (?<=>).*(?=</.+?>)
+      scope: html_inline.idiosync_markdown
+
+    # HTML tag
+    
+    - match: "<"
+      scope: html_tag.otvarajuci.idiosync_markdown
+      push: html_tag
+    
+    # HTML blok
+
+    - match: '``'
+      scope: html_blok.pocetak.idiosync_markdown
+      push: Packages/HTML/HTML.sublime-syntax
+      with_prototype:
+        - match: (?=~~)
+          pop: true
+    - match: '~~'
+      scope: html_blok.zavrsetak.idiosync_markdown
+
+      # Lista
+
+    - match: '^\*\n'
+      scope: lista.idiosync_markdown
+      push: lista  
+
+  double_quoted_string:
+    - meta_scope: string.quoted.double.idiosync_markdown
+    - match: '\\.'
+      scope: constant.character.escape.idiosync_markdown
+    - match: '"'
+      scope: punctuation.definition.string.end.idiosync_markdown
+      pop: true
+
+  # html_inline:
+  #   - meta_scope: lista.idiosync_markdown
+  #   - match: '</.+?>'
+  #     pop: true    
+
+  html_tag:
+    - meta_scope: html_tag.idiosync_markdown
+    - match: ' .+?(?=\=)'
+      scope: html_tag.atribut.naziv.idiosync_markdown
+    - match: '='
+      scope: html_tag.atribut.znak_jednako.idiosync_markdown
+    - match: "\'.+?\'"
+      scope: html_tag.atribut.vrednost.idiosync_markdown
+    - match: ">"
+      pop: true
+
+  komentar:
+    - meta_scope: komentar.idiosync_markdown
+    - match: '\n'
+      pop: true
+
+  lista:
+    - meta_scope: lista.idiosync_markdown
+    - match: '\*\*\n'
+      pop: true
+
