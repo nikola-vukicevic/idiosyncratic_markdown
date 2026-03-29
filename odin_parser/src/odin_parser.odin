@@ -81,35 +81,37 @@ upisivanje_tokena :: proc(red: string, parser: ^ParserInfo) {
 	}
 
 	red_p := strings.trim_space(red)
-	info  := ispitivanje_uslova_heading(red)
+	info  := ispitivanje_uslova_heading(red_p)
 
 	if info.da_li_je_naslov {
-		obrada_naslov(red, info, parser)
+		obrada_naslov(red_p, info, parser)
 		return
 	}
 
-	if strings.has_prefix(red, "**") {
+	if strings.has_prefix(red_p, "**") {
 		append(&parser^.redovi, "</ul>\n\n")
 		return
 	}
 
-	if strings.starts_with(red, "*") {
+	if strings.starts_with(red_p, "*") {
 		append(&parser^.redovi, "<ul>\n")
 		return
 	}
 
-	if strings.has_prefix(red, "\t") {
-		novi_red := strings.concatenate({ "\t<li>" , red[1 : ] , "</li>\n" }, context.temp_allocator)
+	if strings.has_prefix(red_p, "\t") {
+		novi_red := strings.concatenate({ "\t<li>" , red_p[1 : ] , "</li>\n" }, context.temp_allocator)
+		// TODO - rešiti substring !!!
+		// novi_red := strings.concatenate({ "\t<li>" , red.substring(1) , "</li>\n" }, context.temp_allocator)
 		append(&parser^.redovi, novi_red)
 		return
 	}
 
-	if strings.has_prefix(red, "@@") {
-		append(&parser^.izlazne_datoteke, red[ 2 : ])
+	if strings.has_prefix(red_p, "@@") {
+		append(&parser^.izlazne_datoteke, red_p[ 2 : ]/* .substring(2) */) // TODO - rešiti substring!!!	
 		return
 	}
 
-	novi_red := strings.concatenate({ "<p>\n\t" , red , "\n</p>\n\n" }, context.temp_allocator)
+	novi_red := strings.concatenate({ "<p>\n\t" , red_p , "\n</p>\n\n" }, context.temp_allocator)
 	append(&parser^.redovi, novi_red)
 }
 /* -------------------------------------------------------------------------- */
